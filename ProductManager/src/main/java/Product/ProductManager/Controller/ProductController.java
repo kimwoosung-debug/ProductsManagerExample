@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -30,6 +32,8 @@ public class ProductController {
 
         Products products = new Products();
         products.setName(form.getName());
+        products.setPrice(form.getPrice());
+        products.setStock(form.getStock());
 
         productService.register(products);
 
@@ -41,5 +45,30 @@ public class ProductController {
         List<Products> products = productService.findProduct();
         model.addAttribute("products", products);
         return "products/List";
+    }
+
+    @GetMapping(value = "/products/{no}/edit")
+    public String updateForm(@PathVariable("no") Integer no, @ModelAttribute("product") Products products) {
+        return "products/productUpdateForm";
+    }
+
+    @PostMapping(value = "/products/{no}/edit")
+    public String updateProduct(@PathVariable("no") Integer no, @ModelAttribute("product") Products products) {
+
+        products.setNo(no);
+        products.setName(products.getName());
+        products.setPrice(products.getPrice());
+        products.setStock(products.getStock());
+        productService.update(products);
+
+        return "redirect:/products";
+    }
+
+
+    @GetMapping("/products/{no}/delete")
+    public String deleteProduct(@PathVariable("no") Integer no) {
+        productService.delete(no);
+
+        return "redirect:/products";
     }
 }

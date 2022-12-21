@@ -12,4 +12,5 @@ public interface ProductRepository {
     Optional<Products> findByNo(Integer no);
     Optional<Products> findByName(String name);
     List<Products> findAll();
+    void delete(Products products);
 }

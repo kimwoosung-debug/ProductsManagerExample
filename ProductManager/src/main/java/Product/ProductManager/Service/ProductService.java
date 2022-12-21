@@ -1,14 +1,15 @@
 package Product.ProductManager.Service;
 
 import Product.ProductManager.Domain.Products;
-import Product.ProductManager.Repository.MemoryProductRepository;
 import Product.ProductManager.Repository.ProductRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
+
+@Service
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -17,7 +18,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-
+    @Transactional
     public Integer register(Products products) {
 
         validateDuplicateProduct(products);
@@ -39,4 +40,19 @@ public class ProductService {
     public Optional<Products> findOne(Integer productNo) {
         return productRepository.findByNo(productNo);
     }
+
+    public void delete(Integer no) {
+        productRepository.delete(productRepository.findByNo(no).get());
+    }
+    @Transactional
+    public void update(Products products) {
+        Products product = productRepository.findByNo(products.getNo()).get();
+        product.setName(products.getName());
+        product.setPrice(products.getPrice());
+        product.setStock(products.getStock());
+    }
+
+
+
+
 }
