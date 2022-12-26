@@ -1,7 +1,6 @@
 package Product.ProductManager.Service;
 
 import Product.ProductManager.Domain.Products;
-import Product.ProductManager.Repository.MemoryProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

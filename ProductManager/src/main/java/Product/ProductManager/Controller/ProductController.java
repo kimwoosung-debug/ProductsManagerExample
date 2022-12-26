@@ -1,6 +1,7 @@
 package Product.ProductManager.Controller;
 
 import Product.ProductManager.Domain.Products;
+import Product.ProductManager.Repository.ProductRepository;
 import Product.ProductManager.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,16 @@ public class ProductController {
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "home";
+    }
+
+    @GetMapping("/api")
+    public String apiPage() {
+        return "products/apiPage";
     }
 
     @GetMapping(value = "/products/new")
@@ -49,6 +60,7 @@ public class ProductController {
 
     @GetMapping(value = "/products/{no}/edit")
     public String updateForm(@PathVariable("no") Integer no, @ModelAttribute("product") Products products) {
+
         return "products/productUpdateForm";
     }
 
